@@ -1,14 +1,20 @@
+var consts = require('./consts');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var mongodb = require('mongodb');
+var passport = require('passport');
+var FacebookStrategy = require('passport-facebook').Strategy;
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/clients');
 
 var app = express();
+var mongoClien = mongodb.MongoClient;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +28,96 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use(LOGIN_URL, index);
+app.use(CLIENT_URL, users);
+
+app.get(CLIENT_RETRIEVE_URL, function (req, res) {
+  mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
+      if (err) throw err;
+      
+      var dbo = db.db(DBNAME_ADMIN);
+      
+      dbo.collection(COLLECTION_USERS).find({}).toArray(function(err, result) {
+        if (err) throw err;
+        db.close();
+        return res.send(result);
+      });
+    
+  });
+});
+
+app.post(CLIENT_CREATE_URL, function (req, res) {
+  mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
+      if (err) throw err;
+
+      var dbo = db.db(DBNAME_ADMIN);
+      var user = { name: "eulises"/*req.query.name*/, picture: "eulises's picture"/*req.query.name+"'s picture"*/ };
+      
+      dbo.collection(COLLECTION_USERS).insertOne(user, function(err, res) {
+        if (err) throw err;
+        db.close();
+      });
+  
+  });
+  res.send('Add Client');
+});
+
+app.put(CLIENT_UPDATE_URL, function (req, res) {
+  mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
+      if (err) throw err;
+      
+      var dbo = db.db(DBNAME_ADMIN);
+      var myquery = { name: "eulises" };
+      var newvalues = { $set: {name: "Elias de jesus", picture: "Elias de jesus's picture" } };
+      
+      dbo.collection(COLLECTION_USERS).updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        db.close();
+      });
+    
+  });
+  res.send('Update Client');
+});
+
+app.delete(CLIENT_DELETE_URL, function (req, res) {
+  mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
+      if (err) throw err;
+
+      var dbo = db.db(DBNAME_ADMIN);
+      var myquery = { name: "Elias de jesus" };
+      
+      dbo.collection(COLLECTION_USERS).deleteOne(myquery, function(err, obj) {
+        if (err) throw err;
+        db.close();
+      });
+  
+  });
+  res.send('Delete Client');
+});
+
+/*passport.use(new FacebookStrategy({
+  clientID: FACEBOOK_API_KEY,
+  clientSecret: FACEBOOK_API_SECRET,
+  callbackURL: FACEBOOK_CALBACK_URL
+},
+function(accessToken, refreshToken, profile, done) {
+  process.nextTick(function () {
+    //Check whether the User exists or not using profile.id
+    //Further DB code.
+    return done(null, profile);
+  });
+}
+));*/
+
+/*app.get(LOGIN_FACEBOOK, passport.authenticate('facebook'));
+app.get(LOGIN_FACEBOOK_CALLBACK,
+passport.authenticate('facebook', { 
+     successRedirect : '//localhost:3000/login', 
+     failureRedirect: '//localhost:3000/' 
+}),
+function(req, res) {
+  res.redirect('//localhost:3000/');
+});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
