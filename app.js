@@ -106,7 +106,7 @@ app.delete(CLIENT_DELETE_URL, function (req, res) {
       if (err) throw err;
 
       var dbo = db.db(DBNAME_ADMIN);
-      var myquery = { name: "Elias de jesus" };
+      var myquery = { id: req.body.id };
       
       dbo.collection(COLLECTION_USERS).deleteOne(myquery, function(err, obj) {
         if (err) throw err;
