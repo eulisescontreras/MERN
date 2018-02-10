@@ -98,10 +98,8 @@ app.put(CLIENT_UPDATE_URL, function (req, res) {
       if (err) throw err;
       
       var dbo = db.db(DBNAME_ADMIN);
-      //var ObjectId = require('mongoose').Types.ObjectId;
-      //var myquery = { _id: new ObjectId(req.body._id) };
-      
-      var myquery = { name: req.body.name };
+      var ObjectId = require('mongoose').Types.ObjectId;
+      var myquery = { _id: new ObjectId(req.body._id) };
       var newvalues = { $set: {name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address } };
       
       dbo.collection(COLLECTION_USERS).updateOne(myquery, newvalues, function(err, res) {
