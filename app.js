@@ -11,10 +11,31 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var index = require('./routes/index');
-var users = require('./routes/clients');
+var client = require('./routes/clients');
 
 var app = express();
 var mongoClien = mongodb.MongoClient;
+
+
+app.use(function (req, res, next) {
+    
+  // Website you wish to allow to connect
+  res.setHeader(WEBSITE_ALLOW_CONNECT_NAME, WEBSITE_ALLOW_CONNECT_VALUE);
+
+  // Request methods you wish to allow
+  res.setHeader(REQUEST_ALLOW_METHODS_NAME, REQUEST_ALLOW_METHODS_VALUE);
+
+  // Request headers you wish to allow
+  res.setHeader(REQUEST_ALLOW_HEADERS_NAME, REQUEST_ALLOW_HEADERS_VALUE);
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader(REQUEST_ALLOW_COOKIES_NAME, true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +50,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(LOGIN_URL, index);
-app.use(CLIENT_URL, users);
+app.use(CLIENT_URL, client);
 
 app.get(CLIENT_RETRIEVE_URL, function (req, res) {
   mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
@@ -95,7 +116,7 @@ app.delete(CLIENT_DELETE_URL, function (req, res) {
   res.send('Delete Client');
 });
 
-/*passport.use(new FacebookStrategy({
+passport.use(new FacebookStrategy({
   clientID: FACEBOOK_API_KEY,
   clientSecret: FACEBOOK_API_SECRET,
   callbackURL: FACEBOOK_CALBACK_URL
@@ -107,17 +128,17 @@ function(accessToken, refreshToken, profile, done) {
     return done(null, profile);
   });
 }
-));*/
+));
 
-/*app.get(LOGIN_FACEBOOK, passport.authenticate('facebook'));
+app.get(LOGIN_FACEBOOK, passport.authenticate('facebook'));
 app.get(LOGIN_FACEBOOK_CALLBACK,
 passport.authenticate('facebook', { 
-     successRedirect : '//localhost:3000/login', 
-     failureRedirect: '//localhost:3000/' 
+     successRedirect : CLIENT_URL, 
+     failureRedirect: LOGIN_URL 
 }),
 function(req, res) {
-  res.redirect('//localhost:3000/');
-});*/
+  res.redirect(CLIENT_URL);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

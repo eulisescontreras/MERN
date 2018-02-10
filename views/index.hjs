@@ -6,8 +6,8 @@
   </head>
   <body>
     <div id="app"></div>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
-    <script type="text/javascript" src="/build/bundle.js"></script>
+    <!--<h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>-->
+    <script type="text/javascript" src="/build/App.js"></script>
   </body>
 </html>

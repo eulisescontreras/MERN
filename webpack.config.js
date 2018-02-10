@@ -3,11 +3,12 @@ var path = require("path");
 
 module.exports = {
     entry: {
-        app: "./public/app/App.js"    
+        app: "./public/app/App.js",
+        client: "./public/app/Client.js"
     },
     output: {
-        filename: "public/build/bundle.js",
-        sourceMapFilename: "public/build/bundle.map"
+        filename: "public/build/[name].js",
+        sourceMapFilename: "public/build/[name].map",
     },
     devtool: '#source-map',
     
