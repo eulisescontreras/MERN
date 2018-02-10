@@ -52,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(LOGIN_URL, index);
 app.use(CLIENT_URL, client);
+}
 
 app.get(CLIENT_RETRIEVE_URL, function (req, res) {
   mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
@@ -72,16 +73,24 @@ app.post(CLIENT_CREATE_URL, function (req, res) {
   mongoClien.connect(CONNECT_MONGODB_URL, function(err, db) {
       if (err) throw err;
 
+      var sequenceDocument = db.counters.findAndModify({
+            query:{_id: "userid" },
+            update: {$inc:{sequence_value:1}},
+            new:true
+         });
+
       var dbo = db.db(DBNAME_ADMIN);
-      var user = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address };
-      
+      var user = { id:sequenceDocument.sequence_value, name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address };
+      var maxId = 0;
+
       dbo.collection(COLLECTION_USERS).insertOne(user, function(err, res) {
         if (err) throw err;
         db.close();
       });
   
   });
-  res.send('Add Client');
+
+  res.send(user);
 });
 
 app.put(CLIENT_UPDATE_URL, function (req, res) {
@@ -89,14 +98,16 @@ app.put(CLIENT_UPDATE_URL, function (req, res) {
       if (err) throw err;
       
       var dbo = db.db(DBNAME_ADMIN);
-      var myquery = { _id: req.body._id };
+      //var ObjectId = require('mongoose').Types.ObjectId;
+      //var myquery = { _id: new ObjectId(req.body._id) };
+      
+      var myquery = { name: req.body.name };
       var newvalues = { $set: {name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address } };
       
       dbo.collection(COLLECTION_USERS).updateOne(myquery, newvalues, function(err, res) {
         if (err) throw err;
         db.close();
       });
-    
   });
   res.send('Update Client');
 });

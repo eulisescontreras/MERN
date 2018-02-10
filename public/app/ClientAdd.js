@@ -38,7 +38,7 @@ function addClient(state,usersData){
                 email: states.email, 
                 phone: states.phone, 
                 address: states.address,
-                id: states._id
+                _id: states._id
             })
         })
         .then(function(res){
@@ -110,7 +110,9 @@ class AddClient extends Component {
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-primary col-md-offset-1" onClick={() => addClient(this.state,this.usersData)}>Aceptar</button>
+                        <button className="btn btn-primary" onClick={() => addClient(this.state,this.usersData)}>
+                        {!this.state.isEdit ? 'Add' : 'Edit'}
+                        </button>
                     </div>
                 </div>
             </div>
