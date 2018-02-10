@@ -1,6 +1,6 @@
 // Website you wish to allow to connect
 WEBSITE_ALLOW_CONNECT_NAME = "Access-Control-Allow-Origin";
-WEBSITE_ALLOW_CONNECT_VALUE = "http://localhost:3000";
+WEBSITE_ALLOW_CONNECT_VALUE = "*";
 
 // Request methods you wish to allow
 REQUEST_ALLOW_METHODS_NAME = "Access-Control-Allow-Methods";
