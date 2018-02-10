@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-function addClient(state){
+function addClient(state,usersData){
     fetch('//localhost:3000/clients/add',
     {
         headers: {
@@ -15,8 +15,11 @@ function addClient(state){
             address: state.address
         })
     })
+    .then(function(res){
+        usersData();
+    })
     .catch(function(res){ 
-        Console.log(res); 
+        console.log(res); 
     })
 }
 
@@ -30,6 +33,7 @@ class AddClient extends Component {
             address: ""
         }
         this.handleChange = this.handleChange.bind(this);
+        this.usersData = props.usersData;
     }
 
     handleChange({ target }) {
@@ -77,7 +81,7 @@ class AddClient extends Component {
                         </div>
                     </div>
                     <div>
-                        <button className="btn btn-primary col-md-offset-1" onClick={() => addClient(this.state)}>Inser Data</button>
+                        <button className="btn btn-primary col-md-offset-1" onClick={() => addClient(this.state,this.usersData)}>Aceptar</button>
                     </div>
                 </div>
             </div>

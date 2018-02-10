@@ -12,6 +12,7 @@ class Client extends Component {
             showClientAdd: false
         }
         this.showFields = this.showFields.bind(this);
+        this.usersData = this.usersData.bind(this);
         {this.usersData()}
     }
 
@@ -44,7 +45,7 @@ class Client extends Component {
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
-                        <table className="table table-hover">
+                        <table className="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -71,7 +72,7 @@ class Client extends Component {
                     </div>
                 </div>
                 <div>
-                  { this.state.showClientAdd ? <ClientAdd /> : null }
+                  { this.state.showClientAdd ? <ClientAdd usersData={this.usersData}/> : null }
                 </div>
             </div>
         );
