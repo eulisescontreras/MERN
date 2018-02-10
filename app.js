@@ -106,8 +106,9 @@ app.delete(CLIENT_DELETE_URL, function (req, res) {
       if (err) throw err;
 
       var dbo = db.db(DBNAME_ADMIN);
-      var myquery = { id: req.body.id };
-      
+      var ObjectId = require('mongoose').Types.ObjectId;
+      var myquery = { _id: new ObjectId(req.body._id) };
+
       dbo.collection(COLLECTION_USERS).deleteOne(myquery, function(err, obj) {
         if (err) throw err;
         db.close();

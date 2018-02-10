@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import ClientAdd from './ClientAdd';
 
 
-function deleteClient(id){
-    fetch('//localhost:3000/clients/delete/' + id,
+function deleteClient(member){
+    fetch('//localhost:3000/clients/delete/'+member._id,
     {
         headers: {
             'Accept': 'application/json',
@@ -13,14 +13,14 @@ function deleteClient(id){
         },
         method: "DELETE",
         body: JSON.stringify({
-            id: id
+            _id: member._id
         })
     })
     .then(function(res){
         usersData();
     })
     .catch(function(res){ 
-        Console.log(res); 
+        console.log(res); 
     })
 };
 
@@ -82,7 +82,7 @@ class Client extends Component {
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
-                        <table className="table table-bordered">
+                        <table className="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -103,7 +103,7 @@ class Client extends Component {
                                     <td>{member.address}</td>
                                     <td> 
                                         <button className="btn btn-warning col-md-offset-1" onClick={(e) => this.editClient(member,e)}>Edit</button>
-                                        <button className="btn btn-danger col-md-offset-1" onClick={() => deleteClient(member._id)}>Delete</button>
+                                        <button className="btn btn-danger col-md-offset-1" onClick={() => deleteClient(member)}>Delete</button>
                                     </td>
                                 </tr>
                             )}
