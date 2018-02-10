@@ -40,13 +40,14 @@ class Client extends Component {
         return (
             <div>
                 <div>
-                    <button className="btn btn-primary col-md-offset-1" onClick={this.showFields}>Inser Data</button>
+                    <button className="btn btn-primary col-md-offset-1" onClick={this.showFields}>Insert Data</button>
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
                         <table className="table table-hover">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
@@ -57,6 +58,7 @@ class Client extends Component {
                             <tbody>
                             {this.state.clients.map(member =>
                                 <tr key={member._id}>
+                                <td>{member.id}</td>
                                 <td>{member.name}</td>
                                 <td>{member.email}</td>
                                 <td>{member.phone}</td>
