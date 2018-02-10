@@ -110,9 +110,13 @@ class AddClient extends Component {
                         </div>
                     </div>
                     <div>
+<<<<<<< HEAD
                         <button className="btn btn-primary" onClick={() => addClient(this.state,this.usersData)}>
                         {!this.state.isEdit ? 'Add' : 'Edit'}
                         </button>
+=======
+                        <button className="btn btn-primary col-md-offset-1" onClick={() => addClient(this.state,this.usersData)}>{this.state.isEdit ? "Editar" : "Insertar"}</button>
+>>>>>>> 6713cbb8f776adf0d40926df613f2cac81d8d0ba
                     </div>
                 </div>
             </div>
