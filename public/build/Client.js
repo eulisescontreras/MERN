@@ -19101,6 +19101,26 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/*function editClient(id){
+    fetch('//localhost:3000/clients/update/'+id,
+    {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            id: id
+        })
+    })
+    .then(function(res){
+        usersData();
+    })
+    .catch(function(res){ 
+        console.log(res); 
+    })
+}*/
+
 var Client = function (_Component) {
     _inherits(Client, _Component);
 
@@ -19113,7 +19133,9 @@ var Client = function (_Component) {
             clients: [],
             showClientAdd: false
         };
-        _this.showFields = _this.showFields.bind(_this);
+        _this.isEdit = false;
+        _this.member = null;
+        _this.addClient = _this.addClient.bind(_this);
         _this.usersData = _this.usersData.bind(_this);
         {
             _this.usersData();
@@ -19139,14 +19161,30 @@ var Client = function (_Component) {
             });
         }
     }, {
-        key: 'showFields',
-        value: function showFields() {
+        key: 'editClient',
+        value: function editClient(member, e) {
+            var currentState = this.state.showClientAdd;
+            this.isEdit = true;
+            if (!currentState) {
+                this.setState({ showClientAdd: true });
+                this.member = member;
+            } else {
+                this.setState({ showClientAdd: false });
+                this.member = null;
+            }
+        }
+    }, {
+        key: 'addClient',
+        value: function addClient() {
             var currentState = this.state.showClientAdd;
             this.setState({ showClientAdd: !currentState });
+            this.isEdit = false;
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -19155,7 +19193,7 @@ var Client = function (_Component) {
                     null,
                     _react2.default.createElement(
                         'button',
-                        { className: 'btn btn-primary col-md-offset-1', onClick: this.showFields },
+                        { className: 'btn btn-primary col-md-offset-1', onClick: this.addClient },
                         'Insert Data'
                     )
                 ),
@@ -19242,14 +19280,15 @@ var Client = function (_Component) {
                                             'td',
                                             null,
                                             _react2.default.createElement(
-                                                'a',
-                                                null,
+                                                'button',
+                                                { className: 'btn btn-warning col-md-offset-1', onClick: function onClick(e) {
+                                                        return _this2.editClient(member, e);
+                                                    } },
                                                 'Edit'
                                             ),
-                                            '|',
                                             _react2.default.createElement(
-                                                'a',
-                                                null,
+                                                'button',
+                                                { className: 'btn btn-danger col-md-offset-1' },
                                                 'Delete'
                                             )
                                         )
@@ -19262,7 +19301,7 @@ var Client = function (_Component) {
                 _react2.default.createElement(
                     'div',
                     null,
-                    this.state.showClientAdd ? _react2.default.createElement(_ClientAdd2.default, { usersData: this.usersData }) : null
+                    this.state.showClientAdd ? _react2.default.createElement(_ClientAdd2.default, { isEdit: this.isEdit, member: this.member, usersData: this.usersData }) : null
                 )
             );
         }
@@ -20324,23 +20363,44 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function addClient(state, usersData) {
-    fetch('//localhost:3000/clients/add', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-            name: state.name,
-            email: state.email,
-            phone: state.phone,
-            address: state.address
-        })
-    }).then(function (res) {
-        usersData();
-    }).catch(function (res) {
-        console.log(res);
-    });
+    if (!state.isEdit) {
+        fetch('//localhost:3000/clients/add', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                name: state.name,
+                email: state.email,
+                phone: state.phone,
+                address: state.address
+            })
+        }).then(function (res) {
+            usersData();
+        }).catch(function (res) {
+            console.log(res);
+        });
+    } else {
+        fetch('//localhost:3000/clients/update/' + state._id, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "PUT",
+            body: JSON.stringify({
+                name: state.name,
+                email: state.email,
+                phone: state.phone,
+                address: state.address,
+                id: state._id
+            })
+        }).then(function (res) {
+            usersData();
+        }).catch(function (res) {
+            console.log(res);
+        });
+    }
 }
 
 var AddClient = function (_Component) {
@@ -20352,10 +20412,12 @@ var AddClient = function (_Component) {
         var _this = _possibleConstructorReturn(this, (AddClient.__proto__ || Object.getPrototypeOf(AddClient)).call(this, props));
 
         _this.state = {
-            name: "",
-            email: "",
-            phone: "",
-            address: ""
+            name: props.member == null ? null : props.member.name,
+            email: props.member == null ? null : props.member.email,
+            phone: props.member == null ? null : props.member.phone,
+            address: props.member == null ? null : props.member.address,
+            _id: props.member == null ? null : props.member._id,
+            isEdit: props.isEdit
         };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.usersData = props.usersData;

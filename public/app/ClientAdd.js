@@ -1,36 +1,64 @@
 import React, {Component} from 'react';
 
 function addClient(state,usersData){
-    fetch('//localhost:3000/clients/add',
+    if(!state.isEdit)
     {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-            name: state.name, 
-            email: state.email, 
-            phone: state.phone, 
-            address: state.address
+        fetch('//localhost:3000/clients/add',
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                name: state.name, 
+                email: state.email, 
+                phone: state.phone, 
+                address: state.address
+            })
         })
-    })
-    .then(function(res){
-        usersData();
-    })
-    .catch(function(res){ 
-        console.log(res); 
-    })
+        .then(function(res){
+            usersData();
+        })
+        .catch(function(res){ 
+            console.log(res); 
+        })
+    }else
+    {
+        fetch('//localhost:3000/clients/update/'+state._id,
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "PUT",
+            body: JSON.stringify({
+                name: state.name, 
+                email: state.email, 
+                phone: state.phone, 
+                address: state.address,
+                id: state._id
+            })
+        })
+        .then(function(res){
+            usersData();
+        })
+        .catch(function(res){ 
+            console.log(res); 
+        })
+    }
 }
 
 class AddClient extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            email: "",
-            phone: "",
-            address: ""
+            name:  props.member==null ? null : props.member.name,
+            email:  props.member==null ? null : props.member.email,
+            phone:  props.member==null ? null : props.member.phone,
+            address:  props.member==null ? null : props.member.address,
+            _id:  props.member==null ? null : props.member._id,
+            isEdit: props.isEdit
         }
         this.handleChange = this.handleChange.bind(this);
         this.usersData = props.usersData;

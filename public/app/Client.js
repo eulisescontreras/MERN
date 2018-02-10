@@ -4,6 +4,26 @@ import Modal from 'react-modal';
 import ClientAdd from './ClientAdd';
 
 
+/*function editClient(id){
+    fetch('//localhost:3000/clients/update/'+id,
+    {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            id: id
+        })
+    })
+    .then(function(res){
+        usersData();
+    })
+    .catch(function(res){ 
+        console.log(res); 
+    })
+}*/
+
 class Client extends Component {
     constructor(props) {
         super(props)
@@ -11,7 +31,9 @@ class Client extends Component {
             clients: [],
             showClientAdd: false
         }
-        this.showFields = this.showFields.bind(this);
+        this.isEdit = false;
+        this.member = null;
+        this.addClient = this.addClient.bind(this);
         this.usersData = this.usersData.bind(this);
         {this.usersData()}
     }
@@ -32,16 +54,31 @@ class Client extends Component {
         })    
     }
 
-    showFields(){
+    editClient(member,e){
+        const currentState = this.state.showClientAdd;
+        this.isEdit = true;
+        if(!currentState)
+        {
+            this.setState({ showClientAdd: true });
+            this.member = member;
+        }else
+        {
+            this.setState({ showClientAdd: false });
+            this.member = null;
+        }
+    }
+
+    addClient(){
         const currentState = this.state.showClientAdd;
         this.setState({ showClientAdd: !currentState }); 
+        this.isEdit = false;
     }
 
     render() {
         return (
             <div>
                 <div>
-                    <button className="btn btn-primary col-md-offset-1" onClick={this.showFields}>Insert Data</button>
+                    <button className="btn btn-primary col-md-offset-1" onClick={this.addClient}>Insert Data</button>
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
@@ -59,12 +96,12 @@ class Client extends Component {
                             <tbody>
                             {this.state.clients.map(member =>
                                 <tr key={member._id}>
-                                <td>{member.id}</td>
-                                <td>{member.name}</td>
-                                <td>{member.email}</td>
-                                <td>{member.phone}</td>
-                                <td>{member.address}</td>
-                                <td><button className="btn btn-warning col-md-offset-1" onClick={this.showFields}>Edit</button><button className="btn btn-danger col-md-offset-1" onClick={this.showFields}>Delete</button></td>
+                                    <td>{member.id}</td>
+                                    <td>{member.name}</td>
+                                    <td>{member.email}</td>
+                                    <td>{member.phone}</td>
+                                    <td>{member.address}</td>
+                                    <td><button className="btn btn-warning col-md-offset-1" onClick={(e) => this.editClient(member,e)}>Edit</button><button className="btn btn-danger col-md-offset-1" >Delete</button></td>
                                 </tr>
                             )}
                             </tbody>
@@ -72,7 +109,7 @@ class Client extends Component {
                     </div>
                 </div>
                 <div>
-                  { this.state.showClientAdd ? <ClientAdd usersData={this.usersData}/> : null }
+                  { this.state.showClientAdd ? <ClientAdd isEdit={this.isEdit} member={this.member} usersData={this.usersData}/> : null }
                 </div>
             </div>
         );

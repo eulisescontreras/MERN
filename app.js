@@ -89,8 +89,8 @@ app.put(CLIENT_UPDATE_URL, function (req, res) {
       if (err) throw err;
       
       var dbo = db.db(DBNAME_ADMIN);
-      var myquery = { name: "eulises" };
-      var newvalues = { $set: {name: "Elias de jesus", picture: "Elias de jesus's picture" } };
+      var myquery = { _id: req.body._id };
+      var newvalues = { $set: {name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address } };
       
       dbo.collection(COLLECTION_USERS).updateOne(myquery, newvalues, function(err, res) {
         if (err) throw err;
