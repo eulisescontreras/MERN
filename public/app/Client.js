@@ -59,21 +59,15 @@ class Client extends Component {
     editClient(member,e){
         const currentState = this.state.showClientAdd;
         this.isEdit = true;
-        if(!currentState)
-        {
-            this.setState({ showClientAdd: true });
-            this.member = member;
-        }else
-        {
-            this.setState({ showClientAdd: false });
-            this.member = null;
-        }
+        this.setState({ showClientAdd: true });
+        this.member = member;
     }
 
     addClient(){
         const currentState = this.state.showClientAdd;
         this.setState({ showClientAdd: !currentState }); 
         this.isEdit = false;
+        this.member = null;
     }
 
     render() {
@@ -113,8 +107,13 @@ class Client extends Component {
                         </table>
                     </div>
                 </div>
-                <div>
-                  { this.state.showClientAdd ? <ClientAdd isEdit={this.isEdit} member={this.member} usersData={this.usersData}/> : null }
+                <div key={this.member == null ? "" : this.member._id}>
+                {
+                      this.member == null ?
+                      this.state.showClientAdd ? <ClientAdd isEdit={this.isEdit} member={this.member} usersData={this.usersData}/> : null :
+                      <ClientAdd isEdit={this.isEdit} member={this.member} usersData={this.usersData}/>
+                
+                }
                 </div>
             </div>
         );
