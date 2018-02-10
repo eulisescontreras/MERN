@@ -64,7 +64,7 @@ class Client extends Component {
                                 <td>{member.email}</td>
                                 <td>{member.phone}</td>
                                 <td>{member.address}</td>
-                                <td><a>Edit</a>|<a>Delete</a></td>
+                                <td><button className="btn btn-warning col-md-offset-1" onClick={this.showFields}>Edit</button><button className="btn btn-danger col-md-offset-1" onClick={this.showFields}>Delete</button></td>
                                 </tr>
                             )}
                             </tbody>
