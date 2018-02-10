@@ -18949,10 +18949,12 @@ function deleteClient(member) {
             _id: member._id
         })
     }).then(function (res) {
-        usersData();
+        console.log("Delete -> " + member._id);
     }).catch(function (res) {
         console.log(res);
     });
+
+    return true;
 };
 
 var Client = function (_Component) {
@@ -19115,15 +19117,15 @@ var Client = function (_Component) {
                                             null,
                                             _react2.default.createElement(
                                                 'button',
-                                                { className: 'btn btn-warning col-md-offset-1', onClick: function onClick(e) {
+                                                { className: 'btn btn-warning col-md-offset-1', style: { marginRight: '10px' }, onClick: function onClick(e) {
                                                         return _this2.editClient(member, e);
                                                     } },
                                                 'Edit'
                                             ),
                                             _react2.default.createElement(
                                                 'button',
-                                                { className: 'btn btn-danger col-md-offset-1', onClick: function onClick() {
-                                                        return deleteClient(member);
+                                                { className: 'btn btn-danger', onClick: function onClick() {
+                                                        return deleteClient(member) ? _this2.usersData() : null;
                                                     } },
                                                 'Delete'
                                             )

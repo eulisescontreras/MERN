@@ -17,11 +17,13 @@ function deleteClient(member){
         })
     })
     .then(function(res){
-        usersData();
+        console.log("Delete -> " + member._id);
     })
     .catch(function(res){ 
         console.log(res); 
     })
+
+    return true;
 };
 
 class Client extends Component {
@@ -102,8 +104,8 @@ class Client extends Component {
                                     <td>{member.phone}</td>
                                     <td>{member.address}</td>
                                     <td> 
-                                        <button className="btn btn-warning col-md-offset-1" onClick={(e) => this.editClient(member,e)}>Edit</button>
-                                        <button className="btn btn-danger col-md-offset-1" onClick={() => deleteClient(member)}>Delete</button>
+                                        <button className="btn btn-warning col-md-offset-1" style={{marginRight: '10px'}} onClick={(e) => this.editClient(member,e)}>Edit</button>
+                                        <button className="btn btn-danger" onClick={() => deleteClient(member) ? this.usersData() : null}>Delete</button>
                                     </td>
                                 </tr>
                             )}
