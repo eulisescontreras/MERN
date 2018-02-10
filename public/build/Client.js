@@ -19089,6 +19089,10 @@ var _reactModal = __webpack_require__(47);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
+var _ClientAdd = __webpack_require__(55);
+
+var _ClientAdd2 = _interopRequireDefault(_ClientAdd);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19106,8 +19110,13 @@ var Client = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Client.__proto__ || Object.getPrototypeOf(Client)).call(this, props));
 
         _this.state = {
-            clients: []
+            clients: [],
+            showClientAdd: false
         };
+        _this.showFields = _this.showFields.bind(_this);
+        {
+            _this.usersData();
+        }
         return _this;
     }
 
@@ -19129,96 +19138,120 @@ var Client = function (_Component) {
             });
         }
     }, {
+        key: 'showFields',
+        value: function showFields() {
+            var currentState = this.state.showClientAdd;
+            this.setState({ showClientAdd: !currentState });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'container' },
+                null,
                 _react2.default.createElement(
                     'div',
-                    { className: 'panel panel-default p50 uth-panel' },
+                    null,
                     _react2.default.createElement(
-                        'table',
-                        { className: 'table table-hover' },
+                        'button',
+                        { className: 'btn btn-primary col-md-offset-1', onClick: this.showFields },
+                        'Inser Data'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'panel panel-default p50 uth-panel' },
                         _react2.default.createElement(
-                            'thead',
-                            null,
+                            'table',
+                            { className: 'table table-hover' },
                             _react2.default.createElement(
-                                'tr',
+                                'thead',
                                 null,
                                 _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Name'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Email'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Phone'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Address'
-                                ),
-                                _react2.default.createElement(
-                                    'th',
-                                    null,
-                                    'Action'
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'tbody',
-                            null,
-                            this.state.clients.map(function (member) {
-                                return _react2.default.createElement(
                                     'tr',
-                                    { key: member.id },
+                                    null,
                                     _react2.default.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        member.name
+                                        'Name'
                                     ),
                                     _react2.default.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        member.picture
+                                        'Email'
                                     ),
                                     _react2.default.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        member.phone
+                                        'Phone'
                                     ),
                                     _react2.default.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        member.address
+                                        'Address'
                                     ),
                                     _react2.default.createElement(
-                                        'td',
+                                        'th',
                                         null,
-                                        _react2.default.createElement(
-                                            'a',
-                                            null,
-                                            'Edit'
-                                        ),
-                                        '|',
-                                        _react2.default.createElement(
-                                            'a',
-                                            null,
-                                            'Delete'
-                                        )
+                                        'Action'
                                     )
-                                );
-                            })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tbody',
+                                null,
+                                this.state.clients.map(function (member) {
+                                    return _react2.default.createElement(
+                                        'tr',
+                                        { key: member._id },
+                                        _react2.default.createElement(
+                                            'td',
+                                            null,
+                                            member.name
+                                        ),
+                                        _react2.default.createElement(
+                                            'td',
+                                            null,
+                                            member.email
+                                        ),
+                                        _react2.default.createElement(
+                                            'td',
+                                            null,
+                                            member.phone
+                                        ),
+                                        _react2.default.createElement(
+                                            'td',
+                                            null,
+                                            member.address
+                                        ),
+                                        _react2.default.createElement(
+                                            'td',
+                                            null,
+                                            _react2.default.createElement(
+                                                'a',
+                                                null,
+                                                'Edit'
+                                            ),
+                                            '|',
+                                            _react2.default.createElement(
+                                                'a',
+                                                null,
+                                                'Delete'
+                                            )
+                                        )
+                                    );
+                                })
+                            )
                         )
                     )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    this.state.showClientAdd ? _react2.default.createElement(_ClientAdd2.default, null) : null
                 )
             );
         }
@@ -20251,6 +20284,184 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 }());
 
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function addClient(state) {
+    alert(JSON.stringify(state));
+    /*fetch('//localhost:3000/clients/add',
+    {
+        method: "POST"
+    })
+    .then(function(res){
+        if(res.ok){
+            res.json().then(json => {
+                alert(JSON.stringify(json));
+            });
+        }
+    })
+    .catch(function(res){ 
+        alert(res); 
+    })*/
+}
+
+var AddClient = function (_Component) {
+    _inherits(AddClient, _Component);
+
+    function AddClient(props) {
+        _classCallCheck(this, AddClient);
+
+        var _this = _possibleConstructorReturn(this, (AddClient.__proto__ || Object.getPrototypeOf(AddClient)).call(this, props));
+
+        _this.state = {
+            name: "",
+            email: "",
+            phone: "",
+            address: ""
+        };
+        _this.handleChange = _this.handleChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddClient, [{
+        key: "handleChange",
+        value: function handleChange(_ref) {
+            var target = _ref.target;
+
+            this.setState(_defineProperty({}, target.name, target.value));
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    { className: "container" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row" },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "form-group" },
+                                        _react2.default.createElement(
+                                            "label",
+                                            { className: "form-control" },
+                                            "Name"
+                                        ),
+                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "name", value: this.state.name, onChange: this.handleChange })
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "form-group" },
+                                        _react2.default.createElement(
+                                            "label",
+                                            { className: "form-control" },
+                                            "Email"
+                                        ),
+                                        _react2.default.createElement("input", { type: "email", className: "form-control", name: "email", value: this.state.email, onChange: this.handleChange })
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-md-6" },
+                            _react2.default.createElement(
+                                "div",
+                                { className: "row" },
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "form-group" },
+                                        _react2.default.createElement(
+                                            "label",
+                                            { className: "form-control" },
+                                            "Phone"
+                                        ),
+                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "phone", value: this.state.phone, onChange: this.handleChange })
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "col-md-6" },
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "form-group" },
+                                        _react2.default.createElement(
+                                            "label",
+                                            { className: "form-control" },
+                                            "Address"
+                                        ),
+                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "address", value: this.state.address, onChange: this.handleChange })
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(
+                            "button",
+                            { className: "btn btn-primary col-md-offset-1", onClick: function onClick() {
+                                    return addClient(_this2.state);
+                                } },
+                            "Inser Data"
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddClient;
+}(_react.Component);
+
+exports.default = AddClient;
 
 /***/ })
 /******/ ]);

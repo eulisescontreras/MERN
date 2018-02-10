@@ -4,6 +4,7 @@ import {FacebookLoginButton, TwitterLoginButton} from 'react-social-login-button
 
 const wellStyles = { maxWidth: 400, margin: '200px auto 10px' };
 
+
 const buttonsInstance = (
     <div className="well" style={wellStyles}>
       <FacebookLoginButton text="Sign In with Facebook" onClick={() => loginWithFacebook()} />
@@ -18,6 +19,7 @@ function loginWithFacebook()
   /*fetch('//localhost:3000/login/facebook',
   {
       headers: {
+        'crossDomain': true,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },

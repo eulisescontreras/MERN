@@ -18976,6 +18976,7 @@ function loginWithFacebook() {
   /*fetch('//localhost:3000/login/facebook',
   {
       headers: {
+        'crossDomain': true,
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },

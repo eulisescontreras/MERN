@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import ReactDom from 'react-dom';
 import Modal from 'react-modal';
+import ClientAdd from './ClientAdd';
+
 
 class Client extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            clients: []
+            clients: [],
+            showClientAdd: false
         }
+        this.showFields = this.showFields.bind(this);
+        {this.usersData()}
     }
 
     usersData() {
@@ -23,37 +28,50 @@ class Client extends Component {
             self.setState({clients: data});
         }).catch(err => {
             console.log('caught it!',err);
-        })
+        })    
+    }
+
+    showFields(){
+        const currentState = this.state.showClientAdd;
+        this.setState({ showClientAdd: !currentState }); 
     }
 
     render() {
         return (
-        <div className="container"> 
-            <div className="panel panel-default p50 uth-panel">
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.clients.map(member =>
-                        <tr key={member.id}>
-                        <td>{member.name}</td>
-                        <td>{member.picture}</td>
-                        <td>{member.phone}</td>
-                        <td>{member.address}</td>
-                        <td><a>Edit</a>|<a>Delete</a></td>
-                        </tr>
-                    )}
-                    </tbody>
-                </table>
+            <div>
+                <div>
+                    <button className="btn btn-primary col-md-offset-1" onClick={this.showFields}>Inser Data</button>
+                </div>
+                <div className="container"> 
+                    <div className="panel panel-default p50 uth-panel">
+                        <table className="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {this.state.clients.map(member =>
+                                <tr key={member._id}>
+                                <td>{member.name}</td>
+                                <td>{member.email}</td>
+                                <td>{member.phone}</td>
+                                <td>{member.address}</td>
+                                <td><a>Edit</a>|<a>Delete</a></td>
+                                </tr>
+                            )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                  { this.state.showClientAdd ? <ClientAdd /> : null }
+                </div>
             </div>
-        </div>
         );
     }
 }

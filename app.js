@@ -1,3 +1,4 @@
+var cors = require('cors');
 var consts = require('./consts');
 var express = require('express');
 var path = require('path');
@@ -42,8 +43,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hjs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -72,7 +73,7 @@ app.post(CLIENT_CREATE_URL, function (req, res) {
       if (err) throw err;
 
       var dbo = db.db(DBNAME_ADMIN);
-      var user = { name: "eulises"/*req.query.name*/, picture: "eulises's picture"/*req.query.name+"'s picture"*/ };
+      var user = { name: "eulises", email: "eulises@gmai.com", phone:"(786)2164332", address:"Doral FL"};
       
       dbo.collection(COLLECTION_USERS).insertOne(user, function(err, res) {
         if (err) throw err;
