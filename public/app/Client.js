@@ -29,6 +29,7 @@ class Client extends Component {
             showClientAdd: false
         }
         this.showFields = this.showFields.bind(this);
+        this.usersData = this.usersData.bind(this);
         {this.usersData()}
     }
 
@@ -61,7 +62,11 @@ class Client extends Component {
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
+<<<<<<< HEAD
                         <table className="table table-striped table-bordered">
+=======
+                        <table className="table table-bordered">
+>>>>>>> 03be3556341a9806a29b0af97ef6dbd4cab2d346
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -80,10 +85,14 @@ class Client extends Component {
                                 <td>{member.email}</td>
                                 <td>{member.phone}</td>
                                 <td>{member.address}</td>
+<<<<<<< HEAD
                                 <td> 
                                     <button className="btn btn-warning" style={{marginRight: '6px'}} onClick={this.showFields}>Edit</button>
                                     <button className="btn btn-danger" onClick={() => deleteClient(member._id)}>Delete</button>
                                 </td>
+=======
+                                <td><button className="btn btn-warning col-md-offset-1" onClick={this.showFields}>Edit</button><button className="btn btn-danger col-md-offset-1" onClick={this.showFields}>Delete</button></td>
+>>>>>>> 03be3556341a9806a29b0af97ef6dbd4cab2d346
                                 </tr>
                             )}
                             </tbody>
@@ -91,7 +100,7 @@ class Client extends Component {
                     </div>
                 </div>
                 <div>
-                  { this.state.showClientAdd ? <ClientAdd /> : null }
+                  { this.state.showClientAdd ? <ClientAdd usersData={this.usersData}/> : null }
                 </div>
             </div>
         );
