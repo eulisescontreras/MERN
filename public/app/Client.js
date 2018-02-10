@@ -4,6 +4,23 @@ import Modal from 'react-modal';
 import ClientAdd from './ClientAdd';
 
 
+function deleteClient(id){
+    fetch('//localhost:3000/clients/delete/' + id,
+    {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "DELETE",
+        body: JSON.stringify({
+            id: id
+        })
+    })
+    .catch(function(res){ 
+        Console.log(res); 
+    })
+};
+
 class Client extends Component {
     constructor(props) {
         super(props)
@@ -39,12 +56,12 @@ class Client extends Component {
     render() {
         return (
             <div>
-                <div>
-                    <button className="btn btn-primary col-md-offset-1" onClick={this.showFields}>Insert Data</button>
+                <div className="container">
+                    <button className="btn btn-primary" style={{marginBottom: '10px'}} onClick={this.showFields}>Insert Data</button>
                 </div>
                 <div className="container"> 
                     <div className="panel panel-default p50 uth-panel">
-                        <table className="table table-hover">
+                        <table className="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -63,7 +80,10 @@ class Client extends Component {
                                 <td>{member.email}</td>
                                 <td>{member.phone}</td>
                                 <td>{member.address}</td>
-                                <td><a>Edit</a>|<a>Delete</a></td>
+                                <td> 
+                                    <button className="btn btn-warning" style={{marginRight: '6px'}} onClick={this.showFields}>Edit</button>
+                                    <button className="btn btn-danger" onClick={() => deleteClient(member._id)}>Delete</button>
+                                </td>
                                 </tr>
                             )}
                             </tbody>
