@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDom from 'react-dom';
 import Modal from 'react-modal';
 
 class Client extends Component {
@@ -11,7 +12,7 @@ class Client extends Component {
 
     usersData() {
         let self = this;
-        fetch('//localhost:3001/clients', {
+        fetch('//localhost:3000/clients/list', {
             method: 'GET'
         }).then(function(response) {
             if (response.status >= 400) {
