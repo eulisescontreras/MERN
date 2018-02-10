@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 function addClient(state,usersData){
-    if(!state.isEdit)
+    const states = state;
+    if(!states.isEdit)
     {
         fetch('//localhost:3000/clients/add',
         {
@@ -11,10 +12,10 @@ function addClient(state,usersData){
             },
             method: "POST",
             body: JSON.stringify({
-                name: state.name, 
-                email: state.email, 
-                phone: state.phone, 
-                address: state.address
+                name: states.name, 
+                email: states.email, 
+                phone: states.phone, 
+                address: states.address
             })
         })
         .then(function(res){
@@ -25,7 +26,7 @@ function addClient(state,usersData){
         })
     }else
     {
-        fetch('//localhost:3000/clients/update/'+state._id,
+        fetch('//localhost:3000/clients/update/'+states._id,
         {
             headers: {
                 'Accept': 'application/json',
@@ -33,11 +34,11 @@ function addClient(state,usersData){
             },
             method: "PUT",
             body: JSON.stringify({
-                name: state.name, 
-                email: state.email, 
-                phone: state.phone, 
-                address: state.address,
-                id: state._id
+                name: states.name, 
+                email: states.email, 
+                phone: states.phone, 
+                address: states.address,
+                id: states._id
             })
         })
         .then(function(res){
