@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 
 function addClient(state){
-    alert(JSON.stringify(state));
-    /*fetch('//localhost:3000/clients/add',
+    fetch('//localhost:3000/clients/add',
     {
-        method: "POST"
-    })
-    .then(function(res){
-        if(res.ok){
-            res.json().then(json => {
-                alert(JSON.stringify(json));
-            });
-        }
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            name: state.name, 
+            email: state.email, 
+            phone: state.phone, 
+            address: state.address
+        })
     })
     .catch(function(res){ 
-        alert(res); 
-    })*/
+        Console.log(res); 
+    })
 }
 
 class AddClient extends Component {

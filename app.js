@@ -73,7 +73,7 @@ app.post(CLIENT_CREATE_URL, function (req, res) {
       if (err) throw err;
 
       var dbo = db.db(DBNAME_ADMIN);
-      var user = { name: "eulises", email: "eulises@gmai.com", phone:"(786)2164332", address:"Doral FL"};
+      var user = { name: req.body.name, email: req.body.email, phone: req.body.phone, address: req.body.address };
       
       dbo.collection(COLLECTION_USERS).insertOne(user, function(err, res) {
         if (err) throw err;

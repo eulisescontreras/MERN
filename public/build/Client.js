@@ -20313,21 +20313,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function addClient(state) {
-    alert(JSON.stringify(state));
-    /*fetch('//localhost:3000/clients/add',
-    {
-        method: "POST"
-    })
-    .then(function(res){
-        if(res.ok){
-            res.json().then(json => {
-                alert(JSON.stringify(json));
-            });
-        }
-    })
-    .catch(function(res){ 
-        alert(res); 
-    })*/
+    fetch('//localhost:3000/clients/add', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            name: state.name,
+            email: state.email,
+            phone: state.phone,
+            address: state.address
+        })
+    }).catch(function (res) {
+        Console.log(res);
+    });
 }
 
 var AddClient = function (_Component) {
@@ -20349,108 +20349,108 @@ var AddClient = function (_Component) {
     }
 
     _createClass(AddClient, [{
-        key: "handleChange",
+        key: 'handleChange',
         value: function handleChange(_ref) {
             var target = _ref.target;
 
             this.setState(_defineProperty({}, target.name, target.value));
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             var _this2 = this;
 
             return _react2.default.createElement(
-                "div",
+                'div',
                 null,
                 _react2.default.createElement(
-                    "div",
-                    { className: "container" },
+                    'div',
+                    { className: 'container' },
                     _react2.default.createElement(
-                        "div",
-                        { className: "row" },
+                        'div',
+                        { className: 'row' },
                         _react2.default.createElement(
-                            "div",
-                            { className: "col-md-6" },
+                            'div',
+                            { className: 'col-md-6' },
                             _react2.default.createElement(
-                                "div",
-                                { className: "row" },
+                                'div',
+                                { className: 'row' },
                                 _react2.default.createElement(
-                                    "div",
-                                    { className: "col-md-6" },
+                                    'div',
+                                    { className: 'col-md-6' },
                                     _react2.default.createElement(
-                                        "div",
-                                        { className: "form-group" },
+                                        'div',
+                                        { className: 'form-group' },
                                         _react2.default.createElement(
-                                            "label",
-                                            { className: "form-control" },
-                                            "Name"
+                                            'label',
+                                            { className: 'form-control' },
+                                            'Name'
                                         ),
-                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "name", value: this.state.name, onChange: this.handleChange })
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', value: this.state.name, onChange: this.handleChange })
                                     )
                                 ),
                                 _react2.default.createElement(
-                                    "div",
-                                    { className: "col-md-6" },
+                                    'div',
+                                    { className: 'col-md-6' },
                                     _react2.default.createElement(
-                                        "div",
-                                        { className: "form-group" },
+                                        'div',
+                                        { className: 'form-group' },
                                         _react2.default.createElement(
-                                            "label",
-                                            { className: "form-control" },
-                                            "Email"
+                                            'label',
+                                            { className: 'form-control' },
+                                            'Email'
                                         ),
-                                        _react2.default.createElement("input", { type: "email", className: "form-control", name: "email", value: this.state.email, onChange: this.handleChange })
+                                        _react2.default.createElement('input', { type: 'email', className: 'form-control', name: 'email', value: this.state.email, onChange: this.handleChange })
                                     )
                                 )
                             )
                         ),
                         _react2.default.createElement(
-                            "div",
-                            { className: "col-md-6" },
+                            'div',
+                            { className: 'col-md-6' },
                             _react2.default.createElement(
-                                "div",
-                                { className: "row" },
+                                'div',
+                                { className: 'row' },
                                 _react2.default.createElement(
-                                    "div",
-                                    { className: "col-md-6" },
+                                    'div',
+                                    { className: 'col-md-6' },
                                     _react2.default.createElement(
-                                        "div",
-                                        { className: "form-group" },
+                                        'div',
+                                        { className: 'form-group' },
                                         _react2.default.createElement(
-                                            "label",
-                                            { className: "form-control" },
-                                            "Phone"
+                                            'label',
+                                            { className: 'form-control' },
+                                            'Phone'
                                         ),
-                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "phone", value: this.state.phone, onChange: this.handleChange })
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', value: this.state.phone, onChange: this.handleChange })
                                     )
                                 ),
                                 _react2.default.createElement(
-                                    "div",
-                                    { className: "col-md-6" },
+                                    'div',
+                                    { className: 'col-md-6' },
                                     _react2.default.createElement(
-                                        "div",
-                                        { className: "form-group" },
+                                        'div',
+                                        { className: 'form-group' },
                                         _react2.default.createElement(
-                                            "label",
-                                            { className: "form-control" },
-                                            "Address"
+                                            'label',
+                                            { className: 'form-control' },
+                                            'Address'
                                         ),
-                                        _react2.default.createElement("input", { type: "text", className: "form-control", name: "address", value: this.state.address, onChange: this.handleChange })
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'address', value: this.state.address, onChange: this.handleChange })
                                     )
                                 )
                             )
                         )
                     ),
                     _react2.default.createElement(
-                        "div",
+                        'div',
                         null,
                         _react2.default.createElement(
-                            "button",
-                            { className: "btn btn-primary col-md-offset-1", onClick: function onClick() {
+                            'button',
+                            { className: 'btn btn-primary col-md-offset-1', onClick: function onClick() {
                                     return addClient(_this2.state);
                                 } },
-                            "Inser Data"
+                            'Inser Data'
                         )
                     )
                 )
